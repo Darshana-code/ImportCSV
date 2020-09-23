@@ -97,6 +97,7 @@ try {
         }
 
 
+
         $databasetable = 'users';
         $_inserted_data = array();
         $_not_inserted_data = array();
@@ -112,7 +113,6 @@ try {
 
 
         try {
-            // Create connection
 
             // Handle error if connection fails
             try {
@@ -122,9 +122,14 @@ try {
                 $con = new mysqli($databasehost, $username, $password);
             } catch (Exception $e) {
                 // Handl exception here and stop the execution if db connection fails
-                printf('Connection error:'.$e->getMessage().'\n');
+                printf("Connection error:".$e->getMessage()."\n");
                 exit;
             }
+            mysqli_report(MYSQLI_REPORT_OFF);
+            // Check connection
+            /*if ($con->connect_error) {
+                die("Connection failed: " . $con->connect_error . "\n");
+            }*/
 
             // DRY RUN Option to avoid DB query
             if (!$dryrun) {
@@ -141,7 +146,7 @@ try {
                 // Use that new created db
                 $use_sql = "USE $dbName";
                 if ($con->query($use_sql) === TRUE) {
-                    printf("USING $dbName\n");
+                    printf("USING database $dbName\n");
                 } else {
                     printf("Error using database: " . $con->error . "\n");
                 }
@@ -261,17 +266,17 @@ try {
             printf("\n Total " . count($_inserted_data) . " records inserted ");
             printf("\n Total " . count($_not_inserted_data) . " records ignored due to validation issue \n ");
 
-            if (is_array($_not_inserted_data) && count($_not_inserted_data) > 0) {
+            /*if (is_array($_not_inserted_data) && count($_not_inserted_data) > 0) {
                 printf("\n Following data Ignored - \n");
 
                 foreach ($_not_inserted_data as $_key =>  $_data) {
                     print_r( $_data );
                 }
-            }
+            }*/
 
 
         } catch(Exception $e) {
-            printf( "ERROR: ".$e->getMessage());
+            printf( "ERROR: ".$e->getMessage().$e->getLine()."\n");
         }
 
 
@@ -292,9 +297,3 @@ try {
 catch (InvalidArgumentException $e) {
     echo $e->getMessage();
 }
-
-
-
-
-
-
