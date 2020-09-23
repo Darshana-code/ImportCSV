@@ -35,6 +35,7 @@ try {
             -u – MySQL username\n
             -p – MySQL password\n
             -h – MySQL host\n
+            -db – MySQL DB (optional if not provided a new db with name 'demo_db' will be created)\n
             --help – which will output the list of directives with details.\n");
 
             exit;
@@ -89,7 +90,12 @@ try {
             exit;
         }
 
-        $dbName = 'demo_db';
+        if(!empty($params_array['-db'])) {
+            $dbName = $params_array['-db'];
+        } else {
+            $dbName = 'demo_db';
+        }
+
 
         $databasetable = 'users';
         $_inserted_data = array();
