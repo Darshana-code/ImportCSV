@@ -1,7 +1,7 @@
 # ImportCSV
 PHP Script to import CSV into MySql DB
 
-This script gives you the ability to quickly test snippets of PHP code locally. A local apache server is required.
+This script gives you the ability to quickly test PHP code locally. A local apache server is required.
 
 Run user_upload.php with provided directive:
 
