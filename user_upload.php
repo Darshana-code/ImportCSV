@@ -114,11 +114,16 @@ try {
         try {
             // Create connection
 
-            $con = new mysqli($databasehost, $username, $password);
+            // Handle error if connection fails
+            try {
+                // Create connection
+                mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-            // Check connection
-            if ($con->connect_error) {
-                die("Connection failed: " . $con->connect_error . "\n");
+                $con = new mysqli($databasehost, $username, $password);
+            } catch (Exception $e) {
+                // Handl exception here and stop the execution if db connection fails
+                printf('Connection error:'.$e->getMessage().'\n');
+                exit;
             }
 
             // DRY RUN Option to avoid DB query
